@@ -47,17 +47,10 @@ function Cart() {
         const combinedCartItemsRaw = Object.values(combinedItemsMap);
 
         // Fetch all products
-        const prodRes = await fetch("https://flipkart-backend-1-pjtm.onrender.com/products");
+        const prodRes = await fetch("https://flipkart-backend-q9yh.onrender.com/products");
         const productsResponse = await prodRes.json();
         // Robustly flatten all nested products arrays
-        let allProducts = [];
-        if (Array.isArray(productsResponse)) {
-          productsResponse.forEach((doc) => {
-            if (Array.isArray(doc.products)) {
-              allProducts = allProducts.concat(doc.products);
-            }
-          });
-        }
+        let allProducts = Array.isArray(productsResponse) ? productsResponse : [];
 
         // Merge cart items with product details
         const mergedCartItems = combinedCartItemsRaw.map((item) => {
@@ -122,7 +115,7 @@ function Cart() {
           <div className="bg-white rounded shadow p-4 mb-4 flex items-center justify-between">
             <div>
               <span>
-                Deliver to:{" "}
+                Deliver to:
                 <span className="font-bold text-blue-900">{deliveryAddress.location}</span>
               </span>
             </div>
